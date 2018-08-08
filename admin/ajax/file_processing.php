@@ -12,11 +12,13 @@ global $USER;
 
 $request = \Bitrix\Main\Application::getInstance()->getContext()->getRequest();
 
+$allowActions = ["parse_sql_file", "export_db"];
+
 if (
         !$USER->isAdmin() ||
         !check_bitrix_sessid() ||
         !file_exists(Config::getAbsUploadSqlFilePath($request->get("file_name"))) ||
-        !in_array($request->get("action"), ["upload_file_in_db", "export_db"])
+        !in_array($request->get("action"), $allowActions)
 ) {
     header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
     die();
@@ -24,7 +26,7 @@ if (
 
 switch ($request->get("action")) {
 
-    case "upload_file_in_db":
+    case "parse_sql_file":
 
         $connectionPool = \Bitrix\Main\Application::getInstance()->getConnectionPool();
 
