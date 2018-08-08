@@ -4,6 +4,8 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_ad
 
 set_time_limit(0);
 
+use \travelsoft\sqlparsertools\Config;
+
 global $USER;
 
 \Bitrix\Main\Loader::includeModule("travelsoft.sqlparsertools");
@@ -13,7 +15,7 @@ $request = \Bitrix\Main\Application::getInstance()->getContext()->getRequest();
 if (
         !$USER->isAdmin() ||
         !check_bitrix_sessid() ||
-        !file_exists(travelsoft\sqlparsertools\Config::getAbsUploadSqlFilePath($request->get("file_name"))) ||
+        !file_exists(Config::getAbsUploadSqlFilePath($request->get("file_name"))) ||
         !in_array($request->get("action"), ["upload_file_in_db", "export_db"])
 ) {
     header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
@@ -26,16 +28,16 @@ switch ($request->get("action")) {
 
         $connectionPool = \Bitrix\Main\Application::getInstance()->getConnectionPool();
 
-        $connectionPool->setConnectionParameters("hotels_booking", [
+        $connectionPool->setConnectionParameters(Config::DB_NAME, [
             'className' => '\\Bitrix\\Main\\DB\\MysqliConnection',
-            'host' => 'localhost:31006',
-            'database' => 'hotels_booking',
-            'login' => 'hotels_b',
-            'password' => 'qw23QW@#',
+            'host' => Config::DB_HOST,
+            'database' => Config::DB_NAME,
+            'login' => Config::DB_LOGIN,
+            'password' => Config::DB_PASSWORD,
             'options' => 2.0,
         ]);
         
-        $result = $connectionPool->getConnection("hotels_booking")->executeSqlBatch(file_get_contents(travelsoft\sqlparsertools\Config::getAbsUploadSqlFilePath($request->get("file_name"))));
+        $result = $connectionPool->getConnection(Config::DB_NAME)->executeSqlBatch(file_get_contents(travelsoft\sqlparsertools\Config::getAbsUploadSqlFilePath($request->get("file_name"))));
         
         sendResponse(empty($result), 50, $result);
         

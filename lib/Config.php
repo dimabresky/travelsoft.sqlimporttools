@@ -12,7 +12,13 @@ class Config {
     
     const RELATIVE_UPLOAD_IMAGES_DIR = "/upload/travelsoft_sqlparsertools_images";
     
+    const DB_NAME = "hotels_booking";
     
+    const DB_HOST = "localhost:31006";
+    
+    const DB_LOGIN = "hotels_b";
+    
+    const DB_PASSWORD = "qw23QW@#";
     
     /**
      * @return string
