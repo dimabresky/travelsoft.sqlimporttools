@@ -73,7 +73,7 @@ if ($error === "") {
             }
 
             sendRequest({
-                action: "upload_file_in_db"
+                action: "parse_sql_file"
             }, function (html) {
 
                 if (typeof html !== "") {
