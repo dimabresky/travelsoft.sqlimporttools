@@ -68,7 +68,7 @@ if ($error === "") {
             }
 
             function triggerError() {
-                alert("Sorry. Server problem. Please, try again later");
+                alert("Ooops. Server problem. Please, try again later");
                 window.location = "/bitrix/admin/travelsoft_sqlparsertools.php?lang=<?= LANGUAGE_ID ?>";
             }
 
