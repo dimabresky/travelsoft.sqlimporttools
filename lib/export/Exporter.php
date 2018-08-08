@@ -8,5 +8,5 @@ namespace travelsoft\sqlparsertools\export;
  * @author dimabresky
  */
 abstract class Exporter {
-    abstract public function export();
+    abstract public static function export();
 }
