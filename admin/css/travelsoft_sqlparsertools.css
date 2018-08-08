@@ -1,0 +1,31 @@
+
+/* 
+    Created on : 08.08.2018, 14:56:28
+    Author     : dimabresky
+*/
+
+.table-title {
+    margin-top: 50px;
+}
+
+#files-list {
+    font-size: 16px;
+    border-collapse: collapse;
+}
+
+#files-list td {
+    border-top: 1px solid #000;
+}
+
+#files-list tr:last-child td {
+    border-bottom: 1px solid #000;
+}
+
+#files-list td {
+    padding: 10px;
+}
+
+.cross {
+    text-decoration: none;
+    color: red;
+}

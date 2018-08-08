@@ -10,7 +10,8 @@ $aMenu = array(
     "icon" => "travelsoft_sqlparsertoolsdb-20x20",
     "page_icon" => "travelsoft_sqlparsertoolsdb",
     "items_id" => "menu_travelsoft_sqlparsertools",
-    "url" => "travelsoft_sqlparsertools.php?lang=" . LANGUAGE_ID
+    "url" => "travelsoft_sqlparsertools.php?lang=" . LANGUAGE_ID,
+    "more_url" => ["travelsoft_sqlparsertools_process.php?lang=" . LANGUAGE_ID]
 );
 
 return $aMenu;

@@ -15,7 +15,8 @@ class travelsoft_sqlparsertools extends CModule {
     public $MODULE_GROUP_RIGHTS = "N";
     public $namespaceFolder = "travelsoft";
     public $adminFilesList = array(
-        "travelsoft_sqlparsertools.php"
+        "travelsoft_sqlparsertools.php",
+        "travelsoft_sqlparsertools_process.php"
     );
 
     function __construct() {
@@ -69,9 +70,11 @@ class travelsoft_sqlparsertools extends CModule {
         if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_sql"))) {
             throw new Exception(Loc::getMessage("travelsoft_sqlparsertools_CREATE_TECH_DIRS_ERROR"));
         }
+        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_sql/.htaccess"), "Deny from all");
         if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_images"))) {
             throw new Exception(Loc::getMessage("travelsoft_sqlparsertools_CREATE_TECH_DIRS_ERROR"));
         }
+        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_images/.htaccess"), "Deny from all");
     }
 
     public function deleteTechDirs() {
