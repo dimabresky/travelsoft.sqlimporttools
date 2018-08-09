@@ -9,7 +9,7 @@ namespace travelsoft\sqlparsertools\export;
  */
 class Hotels extends Exporter {
     
-    public static function export () {
+    public function export (array $parameters) {
         
     } 
 }

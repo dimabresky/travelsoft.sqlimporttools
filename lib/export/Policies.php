@@ -9,7 +9,7 @@ namespace travelsoft\sqlparsertools\export;
  */
 class Policies extends Exporter {
     
-    public static function export () {
+    public function export (array $parameters) {
         
     } 
 }

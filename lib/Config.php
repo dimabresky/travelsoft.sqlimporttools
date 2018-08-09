@@ -20,6 +20,12 @@ class Config {
     
     const DB_PASSWORD = "qw23QW@#";
     
+    const PROGRESS_TOTAL = 100;
+    
+    const CITIES_IBLOCK_ID = 30;
+    
+    const COUNTRIES_IBLOCK_ID = 35;
+    
     /**
      * @return string
      */
@@ -54,5 +60,12 @@ class Config {
     public static function getAbsUploadImagePath (string $file_name) {
         
         return self::getAbsUploadImagesDir() . "/" . $file_name;
+    }
+    
+    /**
+     * @return string
+     */
+    public static function getAbsLogFilePath () {
+        return \Bitrix\Main\Application::getDocumentRoot() . "/upload/travelsoft_sqlparsertools_export_log.txt";
     }
 }

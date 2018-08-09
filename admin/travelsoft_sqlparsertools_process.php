@@ -11,6 +11,8 @@ if (!$USER->isAdmin()) {
 
 $APPLICATION->SetTitle(Loc::getMessage("travelsoft_sqlparsertools_PAGE_TITLE"));
 
+$APPLICATION->AddHeadString("<script src='/local/modules/travelsoft.sqlparsertools/admin/js/travelsoft_sqlparsertools_process.js?".randString(7)."'></script>");
+
 \Bitrix\Main\Loader::includeModule("travelsoft.sqlparsertools");
 
 $request = \Bitrix\Main\Application::getInstance()->getContext()->getRequest();
@@ -30,74 +32,18 @@ if ($error === "") {
     <div id="progress-area">
         <?
         CAdminMessage::ShowMessage(array(
-            "MESSAGE" => "Выгрузка файла в базу данных...",
+            "MESSAGE" => "Импорт файла в базу данных...",
             "DETAILS" => "#PROGRESS_BAR#",
             "HTML" => true,
             "TYPE" => "PROGRESS",
-            "PROGRESS_TOTAL" => 100,
-            "PROGRESS_VALUE" => 25,
+            "PROGRESS_TOTAL" => travelsoft\sqlparsertools\Config::PROGRESS_TOTAL,
+            "PROGRESS_VALUE" => 0,
         ));
         ?>
     </div>
 
     <script>
-        BX.ready(function () {
-
-            "use strict";
-
-            function sendRequest(data, onsuccess, onfailure) {
-                BX.showWait();
-                data.sessid = BX.bitrix_sessid();
-                data.file_name = "<?= $request->get("file_name") ?>";
-                BX.ajax({
-                    url: '/local/modules/travelsoft.sqlparsertools/admin/ajax/file_processing.php',
-                    data: data,
-                    method: 'POST',
-                    dataType: 'html',
-                    timeout: 99999999,
-                    async: true,
-                    processData: false,
-                    scriptsRunFirst: false,
-                    emulateOnload: false,
-                    start: true,
-                    cache: false,
-                    onsuccess: onsuccess,
-                    onfailure: onfailure
-                });
-
-            }
-
-            function triggerError() {
-                alert("Ooops. Server problem. Please, try again later");
-                window.location = "/bitrix/admin/travelsoft_sqlparsertools.php?lang=<?= LANGUAGE_ID ?>";
-            }
-
-            sendRequest({
-                action: "parse_sql_file"
-            }, function (html) {
-
-                if (typeof html !== "") {
-                    BX("progress-area").innerHTML = html;
-                    BX.closeWait();
-                    sendRequest({
-                        action: "export_db"
-                    }, function (html) {
-
-                        if (typeof html !== "") {
-                            BX("progress-area").innerHTML = html;
-                            BX.closeWait();
-                        } else {
-                            triggerError();
-                        }
-
-                    }, triggerError);
-                } else {
-                    triggerError();
-                }
-
-            }, triggerError);
-
-        });
+        phpVars.sql_file_name = "<?= $request->get("file_name")?>";
     </script>
     <?
 } else {
