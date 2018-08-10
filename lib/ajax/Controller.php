@@ -20,11 +20,9 @@ class Controller {
         "import_sql" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::importSql",
         "cities_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::citiesExport",
         "policies_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::policiesExport",
+        "facilities_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::facilitiesExport",
+        "hotels_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::hotelsExport",
 //        "rooms_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::roomsExport",
-//        "hotels_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::hotelsExport",
-//        "hotels_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::hotelsExport",
-//        "facilities_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::facilitiesExport",
-//        "facilities_types_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::facilitiesTypesExport"
     ];
 
     public function __construct(\Bitrix\Main\Request $request) {

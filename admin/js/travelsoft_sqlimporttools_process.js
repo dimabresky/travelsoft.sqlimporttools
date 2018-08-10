@@ -69,7 +69,7 @@
 
         function triggerError() {
             alert("Ooops, comrads. Server problem. Please, try again later");
-            window.location = `/bitrix/admin/travelsoft_sqlimporttools.php?lang=${php_vars.LANGUAGE_ID}`;
+//            window.location = `/bitrix/admin/travelsoft_sqlimporttools.php?lang=${php_vars.LANGUAGE_ID}`;
         }
 
         sendRequest({

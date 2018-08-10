@@ -6,7 +6,10 @@ use travelsoft\sqlimporttools\Config;
 use Bitrix\Main\Localization\Loc;
 use travelsoft\sqlimporttools\Tools;
 use travelsoft\sqlimporttools\Logger;
+use \travelsoft\sqlimporttools\export\Exporter;
 use travelsoft\sqlimporttools\export\Cities as citiesExporter;
+use travelsoft\sqlimporttools\export\Policies as policiesExporter;
+use travelsoft\sqlimporttools\export\Facilities as facilitiesExporter;
 
 Loc::loadMessages(__FILE__);
 
@@ -38,27 +41,8 @@ class Actions {
             $logMessage .= "some problems: \r\n";
             $logMessage .= implode("\r\n", $result);
         }
-        
-        self::_finished(function () use ($action) {
-            
-            $next_action = Controller::getNextAction($action);
-            
-            if ($next_action !== "") {
-                $message = Loc::getMessage("travelsoft_sqlparser_tools_" . $next_action);
-            }
-            
-            ob_start();
-            \CAdminMessage::ShowMessage(array(
-                "MESSAGE" => $message,
-                "DETAILS" => "#PROGRESS_BAR#",
-                "HTML" => true,
-                "TYPE" => "PROGRESS",
-                "PROGRESS_TOTAL" => Config::PROGRESS_TOTAL,
-                "PROGRESS_VALUE" => Controller::getProgressForAction($action),
-            ));
 
-            return \json_encode(["html" => ob_get_clean(), "error" => false, "next_action" => $next_action]);
-        }, $logMessage);
+        self::_totalFinish($action, true, $logMessage);
     }
 
     /**
@@ -71,25 +55,62 @@ class Actions {
 
         $done = $citiesExporter->startExport();
 
-        $logMessage = "";
-        if (!$done) {
+        self::_totalFinish($action, $done, self::_totalLogMessage($citiesExporter, $done));
+    }
 
-            $logMessage = "Export citites step is finished (count: ".$citiesExporter->selected_count_elements.")." . $citiesExporter->getLogErrors();
-        } else {
+    /**
+     * @param array $parameters
+     * @param string $action
+     */
+    public static function policiesExport(array $parameters, string $action) {
 
-            $logMessage = "Export citites is finished." . $citiesExporter->getLogErrors();
-        }
-        
-        self::_finished(function () use ($action, $done) {
-            
-            $next_action = $done ? "" : $action;
-            
+        $policiesExporter = new policiesExporter();
+
+        $done = $policiesExporter->startExport();
+
+        self::_totalFinish($action, $done, self::_totalLogMessage($policiesExporter, $done));
+    }
+    
+    /**
+     * @param array $parameters
+     * @param string $action
+     */
+    public static function facilitiesExport (array $parameters, string $action) {
+
+        $facilitiesExporter = new facilitiesExporter();
+
+        $done = $facilitiesExporter->startExport();
+
+        self::_totalFinish($action, $done, self::_totalLogMessage($facilitiesExporter, $done));
+    }
+
+    /**
+     * @param callable $callback
+     * @param string $logMessage
+     */
+    protected static function _finish(callable $callback = null, string $logMessage = "") {
+
+        (new Logger(Config::getAbsLogFilePath()))->write($logMessage);
+        Tools::sendResponse(200, $callback);
+    }
+    
+    /**
+     * @param string $action
+     * @param bool $done
+     * @param string $logMessage
+     */
+    protected static function _totalFinish(string $action = "", bool $done = true, string $logMessage = "") {
+
+        self::_finish(function () use ($action, $done) {
+
+            $next_action = $done ? Controller::getNextAction($action) : $action;
+
             if ($next_action !== "") {
-                $message = Loc::getMessage("travelsoft_sqlparser_tools_". $next_action);
+                $message = Loc::getMessage("travelsoft_sqlparser_tools_" . $next_action);
             } else {
                 $message = Loc::getMessage("travelsoft_sqlparser_tools_ajax_process_is_done");
             }
-            
+
             ob_start();
             \CAdminMessage::ShowMessage(array(
                 "MESSAGE" => $message,
@@ -102,17 +123,25 @@ class Actions {
 
             return \json_encode(["html" => ob_get_clean(), "error" => false, "next_action" => $next_action]);
         }, $logMessage);
+    }
 
-    }
-    
     /**
-     * @param \travelsoft\sqlimporttools\ajax\callable $callback
-     * @param string $logMessage
+     * @param Exporter $exporter
+     * @param bool $done
+     * @return string
      */
-    protected static function _finished (callable $callback = null, string $logMessage = "") {
-        
-        (new Logger(Config::getAbsLogFilePath()))->write($logMessage);
-        Tools::sendResponse(200, $callback);
+    protected function _totalLogMessage(Exporter $exporter, bool $done = true) {
+
+        $logMessage = "";
+        if (!$done) {
+
+            $logMessage = "Export " . $exporter->short_export_name . " export step is finished (count: " . $exporter->selected_count_elements . ")." . $exporter->getLogErrors();
+        } else {
+
+            $logMessage = "Export " . $exporter->short_export_name . " is finished." . $exporter->getLogErrors();
+        }
+
+        return $logMessage;
     }
-    
+
 }

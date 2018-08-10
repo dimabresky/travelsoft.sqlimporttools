@@ -63,5 +63,28 @@ class Tools {
                 die;
         }
     }
-
+    
+    /**
+     * @param string $str
+     * @return string
+     */
+    public static function translit (string $str) {
+        return (string)\Cutil::translit($str, "ru", []);
+    }
+    
+    /**
+     * @param string $str
+     * @return string
+     */
+    public static function prepare2Log (string $str) {
+        return str_replace("<br>", " ", $str);
+    }
+    
+    /**
+     * @param string $str
+     * @return array
+     */
+    public static function extractStringLikeArray(string $str) {
+        return (array)explode(",", str_replace(["[", "]", " "], ["", "", ""], $str));
+    }
 }

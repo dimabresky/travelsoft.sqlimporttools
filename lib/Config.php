@@ -12,6 +12,7 @@ class Config {
     
     const RELATIVE_UPLOAD_IMAGES_DIR = "/upload/travelsoft_sqlimporttools_images";
     
+    // db settings
     const DB_NAME = "hotels_booking";
     
     const DB_HOST = "localhost:31006";
@@ -22,9 +23,21 @@ class Config {
     
     const PROGRESS_TOTAL = 100;
     
+    const ROWS_LIMIT_DB_QUERY = 200;
+    
+    
+    // iblocks id
     const CITIES_IBLOCK_ID = 30;
     
     const COUNTRIES_IBLOCK_ID = 35;
+    
+    const POLICIES_IBLOCK_ID = 59;
+    
+    const FACILITIES_IBLOCK_ID = 39;
+    
+    const FACILITIES_TYPE_IBLOCK_ID = 58;
+    
+    const HOTELS_IBLOCK_ID = 31;
     
     /**
      * @return string
@@ -60,6 +73,24 @@ class Config {
     public static function getAbsUploadImagePath (string $file_name) {
         
         return self::getAbsUploadImagesDir() . "/" . $file_name;
+    }
+    
+    /**
+     * @param string $file_name
+     * @param int $hotel_id
+     * @return string
+     */
+    public static function getAbsUploadHotelsImagePath (string $file_name, int $hotel_id) {
+        return self::getAbsUploadImagesDir() . "/hotels/$hotel_id/$file_name";
+    }
+    
+    /**
+     * @param string $file_name
+     * @param int $room_id
+     * @return string
+     */
+    public static function getAbsUploadRoomsImagePath (string $file_name, int $room_id) {
+        return self::getAbsUploadImagesDir() . "/rooms/$room_id/$file_name";
     }
     
     /**
