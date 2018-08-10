@@ -1,6 +1,6 @@
 <?php
 
-namespace travelsoft\sqlparsertools\export;
+namespace travelsoft\sqlimporttools\export;
 
 \Bitrix\Main\Loader::includeModule("iblock");
 
@@ -43,14 +43,14 @@ abstract class Exporter {
     abstract public function startExport();
     
     public function __construct() {
-        if (!isset($_SESSION["travelosft_sqlparsertools_offset_db_query"])) {
-            $_SESSION["travelosft_sqlparsertools_offset_db_query"] = 0;
+        if (!isset($_SESSION["travelosft_sqlimporttools_offset_db_query"])) {
+            $_SESSION["travelosft_sqlimporttools_offset_db_query"] = 0;
         }
-        if (!isset($_SESSION["travelosft_sqlparsertools_selected_count_elements_db_query"])) {
-            $_SESSION["travelosft_sqlparsertools_offset_db_query"] = 0;
+        if (!isset($_SESSION["travelosft_sqlimporttools_selected_count_elements_db_query"])) {
+            $_SESSION["travelosft_sqlimporttools_offset_db_query"] = 0;
         }
-        $this->offset = &$_SESSION["travelosft_sqlparsertools_offset_db_query"];
-        $this->selected_count_elements = &$_SESSION["travelosft_sqlparsertools_selected_count_elements_db_query"];
+        $this->offset = &$_SESSION["travelosft_sqlimporttools_offset_db_query"];
+        $this->selected_count_elements = &$_SESSION["travelosft_sqlimporttools_selected_count_elements_db_query"];
     }
     
     protected function _finishExport () {

@@ -1,0 +1,1 @@
+<? require($_SERVER["DOCUMENT_ROOT"] . "/local/modules/travelsoft.sqlimporttools/admin/travelsoft_sqlimporttools_process.php"); ?>

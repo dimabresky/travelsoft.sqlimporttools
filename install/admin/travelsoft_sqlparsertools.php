@@ -1,1 +1,0 @@
-<? require($_SERVER["DOCUMENT_ROOT"] . "/local/modules/travelsoft.sqlparsertools/admin/travelsoft_sqlparsertools.php"); ?>

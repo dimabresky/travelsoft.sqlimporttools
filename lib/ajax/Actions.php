@@ -1,12 +1,12 @@
 <?php
 
-namespace travelsoft\sqlparsertools\ajax;
+namespace travelsoft\sqlimporttools\ajax;
 
-use travelsoft\sqlparsertools\Config;
+use travelsoft\sqlimporttools\Config;
 use Bitrix\Main\Localization\Loc;
-use travelsoft\sqlparsertools\Tools;
-use travelsoft\sqlparsertools\Logger;
-use travelsoft\sqlparsertools\export\Cities as citiesExporter;
+use travelsoft\sqlimporttools\Tools;
+use travelsoft\sqlimporttools\Logger;
+use travelsoft\sqlimporttools\export\Cities as citiesExporter;
 
 Loc::loadMessages(__FILE__);
 
@@ -106,7 +106,7 @@ class Actions {
     }
     
     /**
-     * @param \travelsoft\sqlparsertools\ajax\callable $callback
+     * @param \travelsoft\sqlimporttools\ajax\callable $callback
      * @param string $logMessage
      */
     protected static function _finished (callable $callback = null, string $logMessage = "") {

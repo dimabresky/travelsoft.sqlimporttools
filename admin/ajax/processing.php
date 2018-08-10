@@ -4,10 +4,10 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_ad
 
 set_time_limit(0);
 
-\Bitrix\Main\Loader::includeModule("travelsoft.sqlparsertools");
+\Bitrix\Main\Loader::includeModule("travelsoft.sqlimporttools");
 
 $request = \Bitrix\Main\Application::getInstance()->getContext()->getRequest();
 
-$controller = new \travelsoft\sqlparsertools\ajax\Controller($request);
+$controller = new \travelsoft\sqlimporttools\ajax\Controller($request);
 
 $controller->dispatch();

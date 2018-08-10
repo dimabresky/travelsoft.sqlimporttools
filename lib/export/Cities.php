@@ -1,9 +1,9 @@
 <?php
 
-namespace travelsoft\sqlparsertools\export;
+namespace travelsoft\sqlimporttools\export;
 
-use travelsoft\sqlparsertools\Tools;
-use travelsoft\sqlparsertools\Config;
+use travelsoft\sqlimporttools\Tools;
+use travelsoft\sqlimporttools\Config;
 
 /**
  * Класс экспорта городов

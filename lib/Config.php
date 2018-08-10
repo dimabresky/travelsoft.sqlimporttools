@@ -1,5 +1,5 @@
 <?php
-namespace travelsoft\sqlparsertools;
+namespace travelsoft\sqlimporttools;
 
 /**
  * Класс настроек модуля
@@ -8,9 +8,9 @@ namespace travelsoft\sqlparsertools;
  */
 class Config {
     
-    const RELATIVE_UPLOAD_SQL_FILES_DIR = "/upload/travelsoft_sqlparsertools_sql";
+    const RELATIVE_UPLOAD_SQL_FILES_DIR = "/upload/travelsoft_sqlimporttools_sql";
     
-    const RELATIVE_UPLOAD_IMAGES_DIR = "/upload/travelsoft_sqlparsertools_images";
+    const RELATIVE_UPLOAD_IMAGES_DIR = "/upload/travelsoft_sqlimporttools_images";
     
     const DB_NAME = "hotels_booking";
     
@@ -66,6 +66,6 @@ class Config {
      * @return string
      */
     public static function getAbsLogFilePath () {
-        return \Bitrix\Main\Application::getDocumentRoot() . "/upload/travelsoft_sqlparsertools_export_log.txt";
+        return \Bitrix\Main\Application::getDocumentRoot() . "/upload/travelsoft_sqlimporttools_export_log.txt";
     }
 }

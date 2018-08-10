@@ -1,6 +1,6 @@
 <?php
 
-namespace travelsoft\sqlparsertools;
+namespace travelsoft\sqlimporttools;
 
 use Bitrix\Main\Localization\Loc;
 
@@ -30,15 +30,15 @@ class Files {
         ) {
 
             if ($file["error"] !== 0) {
-                throw new \Exception(Loc::getMessage("travelsoft_sqlparsertools_UPLOAD_FILE_ERROR_" . $file["error"]));
+                throw new \Exception(Loc::getMessage("travelsoft_sqlimporttools_UPLOAD_FILE_ERROR_" . $file["error"]));
             }
 
             if (\array_pop(\explode(".", $file["name"])) !== "sql") {
-                throw new \Exception(Loc::getMessage("travelsoft_sqlparsertools_BAD_FILE_EXTENSION"));
+                throw new \Exception(Loc::getMessage("travelsoft_sqlimporttools_BAD_FILE_EXTENSION"));
             }
 
             if (!\move_uploaded_file($file['tmp_name'], Config::getAbsUploadSqlFilePath(\basename($file['name'])))) {
-                throw new \Exception(Loc::getMessage("travelsoft_sqlparsertools_FILE_UPLOADING_ERROR"));
+                throw new \Exception(Loc::getMessage("travelsoft_sqlimporttools_FILE_UPLOADING_ERROR"));
             }
 
             return true;

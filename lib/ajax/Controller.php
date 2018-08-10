@@ -1,9 +1,9 @@
 <?php
 
-namespace travelsoft\sqlparsertools\ajax;
+namespace travelsoft\sqlimporttools\ajax;
 
-use travelsoft\sqlparsertools\Tools;
-use travelsoft\sqlparsertools\Config;
+use travelsoft\sqlimporttools\Tools;
+use travelsoft\sqlimporttools\Config;
 
 /**
  * Контроллер ajax запросов
@@ -17,13 +17,14 @@ class Controller {
      */
     protected $_request = NULL;
     protected static $_actions = [
-        "import_sql" => "\\travelsoft\\sqlparsertools\\ajax\\Actions::importSql",
-        "cities_export" => "\\travelsoft\\sqlparsertools\\ajax\\Actions::citiesExport",
-        "rooms_export" => "\\travelsoft\\sqlparsertools\\ajax\\Actions::roomsExport",
-        "hotels_export" => "\\travelsoft\\sqlparsertools\\ajax\\Actions::hotelsExport",
-        "hotels_export" => "\\travelsoft\\sqlparsertools\\ajax\\Actions::hotelsExport",
-        "facilities_export" => "\\travelsoft\\sqlparsertools\\ajax\\Actions::facilitiesExport",
-        "facilities_types_export" => "\\travelsoft\\sqlparsertools\\ajax\\Actions::facilitiesTypesExport"
+        "import_sql" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::importSql",
+        "cities_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::citiesExport",
+        "policies_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::policiesExport",
+//        "rooms_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::roomsExport",
+//        "hotels_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::hotelsExport",
+//        "hotels_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::hotelsExport",
+//        "facilities_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::facilitiesExport",
+//        "facilities_types_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::facilitiesTypesExport"
     ];
 
     public function __construct(\Bitrix\Main\Request $request) {

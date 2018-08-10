@@ -5,9 +5,9 @@ use Bitrix\Main\Localization\Loc,
 
 Loc::loadMessages(__FILE__);
 
-class travelsoft_sqlparsertools extends CModule {
+class travelsoft_sqlimporttools extends CModule {
 
-    public $MODULE_ID = "travelsoft.sqlparsertools";
+    public $MODULE_ID = "travelsoft.sqlimporttools";
     public $MODULE_VERSION;
     public $MODULE_VERSION_DATE;
     public $MODULE_NAME;
@@ -15,8 +15,8 @@ class travelsoft_sqlparsertools extends CModule {
     public $MODULE_GROUP_RIGHTS = "N";
     public $namespaceFolder = "travelsoft";
     public $adminFilesList = array(
-        "travelsoft_sqlparsertools.php",
-        "travelsoft_sqlparsertools_process.php"
+        "travelsoft_sqlimporttools.php",
+        "travelsoft_sqlimporttools_process.php"
     );
 
     function __construct() {
@@ -28,9 +28,9 @@ class travelsoft_sqlparsertools extends CModule {
             $this->MODULE_VERSION = $arModuleVersion["VERSION"];
             $this->MODULE_VERSION_DATE = $arModuleVersion["VERSION_DATE"];
         }
-        $this->MODULE_NAME = Loc::getMessage("travelsoft_sqlparsertools_MODULE_NAME");
-        $this->MODULE_DESCRIPTION = Loc::getMessage("travelsoft_sqlparsertools_MODULE_DESC");
-        $this->PARTNER_NAME = Loc::getMessage("travelsoft_sqlparsertools_PARTNER_NAME");
+        $this->MODULE_NAME = Loc::getMessage("travelsoft_sqlimporttools_MODULE_NAME");
+        $this->MODULE_DESCRIPTION = Loc::getMessage("travelsoft_sqlimporttools_MODULE_DESC");
+        $this->PARTNER_NAME = Loc::getMessage("travelsoft_sqlimporttools_PARTNER_NAME");
         $this->PARTNER_URI = "https://github.com/dimabresky/";
 
         set_time_limit(0);
@@ -67,20 +67,20 @@ class travelsoft_sqlparsertools extends CModule {
     public function createTechDirs() {
 
         $io = CBXVirtualIo::getInstance();
-        if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_sql"))) {
-            throw new Exception(Loc::getMessage("travelsoft_sqlparsertools_CREATE_TECH_DIRS_ERROR"));
+        if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_sql"))) {
+            throw new Exception(Loc::getMessage("travelsoft_sqlimporttools_CREATE_TECH_DIRS_ERROR"));
         }
-        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_sql/.htaccess"), "Deny from all");
-        if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_images"))) {
-            throw new Exception(Loc::getMessage("travelsoft_sqlparsertools_CREATE_TECH_DIRS_ERROR"));
+        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_sql/.htaccess"), "Deny from all");
+        if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_images"))) {
+            throw new Exception(Loc::getMessage("travelsoft_sqlimporttools_CREATE_TECH_DIRS_ERROR"));
         }
-        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_images/.htaccess"), "Deny from all");
+        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_images/.htaccess"), "Deny from all");
     }
 
     public function deleteTechDirs() {
         $io = CBXVirtualIo::getInstance();
-        $io->Delete($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_sql"));
-        $io->Delete($io->RelativeToAbsolutePath("/upload/travelsoft_sqlparsertools_images"));
+        $io->Delete($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_sql"));
+        $io->Delete($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_images"));
     }
 
     public function DoInstall() {

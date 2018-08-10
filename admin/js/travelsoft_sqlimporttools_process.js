@@ -1,5 +1,5 @@
 /* 
- * travelsoft_sqlparsertools_process.js
+ * travelsoft_sqlimporttools_process.js
  * 
  * @author dimabresky
  */
@@ -25,7 +25,7 @@
             bx.showWait();
             data.sessid = bx.bitrix_sessid();
             bx.ajax({
-                url: '/local/modules/travelsoft.sqlparsertools/admin/ajax/processing.php',
+                url: '/local/modules/travelsoft.sqlimporttools/admin/ajax/processing.php',
                 data: data,
                 method: 'POST',
                 dataType: 'json',
@@ -69,7 +69,7 @@
 
         function triggerError() {
             alert("Ooops, comrads. Server problem. Please, try again later");
-//            window.location = `/bitrix/admin/travelsoft_sqlparsertools.php?lang=${php_vars.LANGUAGE_ID}`;
+            window.location = `/bitrix/admin/travelsoft_sqlimporttools.php?lang=${php_vars.LANGUAGE_ID}`;
         }
 
         sendRequest({

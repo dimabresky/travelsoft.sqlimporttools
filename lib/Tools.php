@@ -1,6 +1,6 @@
 <?php
 
-namespace travelsoft\sqlparsertools;
+namespace travelsoft\sqlimporttools;
 
 /**
  * Класс "инструментов"

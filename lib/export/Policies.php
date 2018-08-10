@@ -1,6 +1,6 @@
 <?php
 
-namespace travelsoft\sqlparsertools\export;
+namespace travelsoft\sqlimporttools\export;
 
 /**
  * Класс экспорта условий проживания

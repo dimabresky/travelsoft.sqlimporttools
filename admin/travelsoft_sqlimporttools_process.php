@@ -9,11 +9,11 @@ if (!$USER->isAdmin()) {
     $APPLICATION->AuthForm("Access denided.");
 }
 
-$APPLICATION->SetTitle(Loc::getMessage("travelsoft_sqlparsertools_PAGE_TITLE"));
+$APPLICATION->SetTitle(Loc::getMessage("travelsoft_sqlimporttools_PAGE_TITLE"));
 
-$APPLICATION->AddHeadString("<script src='/local/modules/travelsoft.sqlparsertools/admin/js/travelsoft_sqlparsertools_process.js?".randString(7)."'></script>");
+$APPLICATION->AddHeadString("<script src='/local/modules/travelsoft.sqlimporttools/admin/js/travelsoft_sqlimporttools_process.js?".randString(7)."'></script>");
 
-\Bitrix\Main\Loader::includeModule("travelsoft.sqlparsertools");
+\Bitrix\Main\Loader::includeModule("travelsoft.sqlimporttools");
 
 $request = \Bitrix\Main\Application::getInstance()->getContext()->getRequest();
 
@@ -22,7 +22,7 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_a
 $error = "";
 if ($request->get("file_name") === "") {
     $error = "";
-} elseif (!file_exists(travelsoft\sqlparsertools\Config::getAbsUploadSqlFilePath($request->get("file_name")))) {
+} elseif (!file_exists(travelsoft\sqlimporttools\Config::getAbsUploadSqlFilePath($request->get("file_name")))) {
     $error = "";
 }
 
@@ -36,7 +36,7 @@ if ($error === "") {
             "DETAILS" => "#PROGRESS_BAR#",
             "HTML" => true,
             "TYPE" => "PROGRESS",
-            "PROGRESS_TOTAL" => travelsoft\sqlparsertools\Config::PROGRESS_TOTAL,
+            "PROGRESS_TOTAL" => travelsoft\sqlimporttools\Config::PROGRESS_TOTAL,
             "PROGRESS_VALUE" => 0,
         ));
         ?>
