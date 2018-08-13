@@ -1,5 +1,5 @@
 <?php
-$MESS["travelsoft_sqlimporttools_PAGE_TITLE"] = "Travelsoft sql parser tools";
+$MESS["travelsoft_sqlimporttools_PAGE_TITLE"] = "Travelsoft sql import tools";
 $MESS["travelsoft_sqlimporttools_TAB_TITLE"] = "Форма загрузки файла sql на сервер";
 $MESS["travelsoft_sqlimporttools_TAB_SUBTITLE"] = "Загрузите файл SQL";
 $MESS["travelsoft_sqlimporttools_SQL_FILE_FIELD_TITLE"] = "Файл SQL";

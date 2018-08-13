@@ -67,20 +67,20 @@ class travelsoft_sqlimporttools extends CModule {
     public function createTechDirs() {
 
         $io = CBXVirtualIo::getInstance();
-        if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_sql"))) {
+        if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools/sql"))) {
             throw new Exception(Loc::getMessage("travelsoft_sqlimporttools_CREATE_TECH_DIRS_ERROR"));
         }
-        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_sql/.htaccess"), "Deny from all");
-        if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_images"))) {
+        
+        if (!$io->CreateDirectory($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools/images"))) {
             throw new Exception(Loc::getMessage("travelsoft_sqlimporttools_CREATE_TECH_DIRS_ERROR"));
         }
-        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_images/.htaccess"), "Deny from all");
+        
+        file_put_contents($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools/.htaccess"), "Deny from all");
     }
 
     public function deleteTechDirs() {
         $io = CBXVirtualIo::getInstance();
-        $io->Delete($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_sql"));
-        $io->Delete($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools_images"));
+        $io->Delete($io->RelativeToAbsolutePath("/upload/travelsoft_sqlimporttools"));
     }
 
     public function DoInstall() {

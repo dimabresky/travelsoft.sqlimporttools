@@ -4,6 +4,7 @@ namespace travelsoft\sqlimporttools\export;
 
 use travelsoft\sqlimporttools\Config;
 use travelsoft\sqlimporttools\Tools;
+
 /**
  * Класс экспорта удобств в отелях
  *
@@ -37,11 +38,10 @@ class Facilities extends Exporter {
                                 "NAME" => $arRow["facilityTypeName"],
                                 "CODE" => Tools::translit($arRow["facilityTypeName"])
                             ]);
-                            
+
                             if (!$is_updated) {
                                 $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try update NAME field " . $arRow["facilityTypeName"] . "]";
                             }
-                            
                         } else {
 
                             // try add
@@ -52,29 +52,28 @@ class Facilities extends Exporter {
                                 "NAME" => $arRow["facilityTypeName"],
                                 "XML_ID" => $arRow["hotelFacilityTypeId"]
                             ]);
-                            
+
                             if ($ID > 0) {
                                 $existsIblockFacilitiesType[$arRow["hotelFacilityTypeId"]] = $ID;
                             } else {
-                                $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try add " . $arRow["facilityTypeName"] . "]";
+                                $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try add " . $arRow["facilityTypeName"] . " facility type]";
                             }
                         }
 
                         if (isset($existsIblockFacilities[$arRow["facilityId"]])) {
-                            
+
                             // try update
                             $is_updated = $context->_iblock_element_object->Update($existsIblockFacilities[$arRow["facilityId"]], [
                                 "NAME" => $arRow["facilityName"],
                                 "CODE" => Tools::translit($arRow["facilityName"]),
                                 "XML_ID" => $arRow["facilityId"],
                             ]);
-                            
+
                             if (!$is_updated) {
                                 $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try update NAME field " . $arRow["facilityName"] . "]";
                             }
-                            
+
                             $context->_iblock_element_object->SetPropertyValuesEx($existsIblockFacilities[$arRow["facilityId"]], Config::FACILITIES_IBLOCK_ID, ["SERVICE_TYPE" => $facilityTypeExists ? $existsIblockFacilitiesType[$arRow["hotelFacilityTypeId"]] : ""]);
-                            
                         } else {
 
                             // try add
@@ -88,14 +87,15 @@ class Facilities extends Exporter {
                                     "SERVICE_TYPE" => $facilityTypeExists ? $existsIblockFacilitiesType[$arRow["hotelFacilityTypeId"]] : ""
                                 ]
                             ]);
-                            
+
                             if ($ID > 0) {
                                 $existsIblockFacilities[$arRow["facilityId"]] = $ID;
                             } else {
-                                $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try add " . $arRow["facilityName"] . "]";
+                                $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try add " . $arRow["facilityName"] . " facility]";
                             }
                         }
                     }
                 });
     }
+
 }

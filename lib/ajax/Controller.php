@@ -22,7 +22,7 @@ class Controller {
         "policies_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::policiesExport",
         "facilities_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::facilitiesExport",
         "hotels_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::hotelsExport",
-//        "rooms_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::roomsExport",
+        "rooms_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::roomsExport",
     ];
 
     public function __construct(\Bitrix\Main\Request $request) {

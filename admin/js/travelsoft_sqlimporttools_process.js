@@ -22,7 +22,7 @@
          * @returns {undefined}
          */
         function sendRequest(data, onsuccess, onfailure) {
-            bx.showWait();
+            
             data.sessid = bx.bitrix_sessid();
             bx.ajax({
                 url: '/local/modules/travelsoft.sqlimporttools/admin/ajax/processing.php',
@@ -37,8 +37,9 @@
                 start: true,
                 cache: false,
                 onsuccess: function (resp) {
-                    bx.closeWait();
+                    
                     if (!onsuccess(resp)) {
+                        bx.closeWait();
                         return;
                     }
                 },
@@ -49,7 +50,6 @@
 
         function onSuccess(resp) {
             
-            bx.closeWait();
             if (resp.html !== "") {
                 
                 progress_area.innerHTML = resp.html;
@@ -71,7 +71,8 @@
             alert("Ooops, comrads. Server problem. Please, try again later");
 //            window.location = `/bitrix/admin/travelsoft_sqlimporttools.php?lang=${php_vars.LANGUAGE_ID}`;
         }
-
+        
+        bx.showWait();
         sendRequest({
             action: "import_sql",
             parameters: {

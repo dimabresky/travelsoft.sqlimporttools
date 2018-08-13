@@ -46,56 +46,59 @@ class Files {
 
         return false;
     }
-    
+
     /**
-     * @param array $external_images_paths
+     * @param array $source_images_paths
      * @param int $hotel_id
      * @return array
      */
-    public function downloadHotelImages (array $external_images_paths, int $hotel_id) {
-        
+    public function downloadHotelImages(array $source_images_paths, int $hotel_id) {
+
         $arDownloadedFiles = [];
-        
-        foreach ($external_images_paths as $path) {
-            
-            $image_path = Config::getAbsUploadHotelsImagePath($this->getFileNameByPath($path), $hotel_id);
-            if ($this->dowloadFile($path, $image_path)) {
-                $arDownloadedFiles[] = $image_path;
+
+        foreach ($source_images_paths as $path) {
+
+            $path = str_replace(["\"", "'"], ["", ""], $path);
+
+            $save_image_path = Config::getAbsUploadHotelsImagePath($this->getFileNameByPath($path), $hotel_id);
+
+            if ($this->dowloadFile($path, $save_image_path)) {
+                $arDownloadedFiles[] = $save_image_path;
             }
-            \sleep(1);
         }
-        
+
         return $arDownloadedFiles;
     }
-    
+
     /**
-     * @param array $external_images_paths
+     * @param array $source_images_paths
      * @param int $room_id
      * @return array
      */
-    public function downloadRoomImages (array $external_images_paths, int $room_id) {
-        
+    public function downloadRoomImages(array $source_images_paths, int $room_id) {
+
         $arDownloadedFiles = [];
-        
-        foreach ($external_images_paths as $path) {
-            
+
+        foreach ($source_images_paths as $path) {
+
+            $path = str_replace(["\"", "'"], ["", ""], $path);
+
             $image_path = Config::getAbsUploadRoomsImagePath($this->getFileNameByPath($path), $room_id);
             if ($this->dowloadFile($path, $image_path)) {
                 $arDownloadedFiles[] = $image_path;
             }
-            \sleep(1);
         }
-        
+
         return $arDownloadedFiles;
     }
-    
+
     /**
      * @param string $path
      * @return string
      */
-    public function getFileNameByPath (string $path) {
-        
-        return (string)array_pop(explode("/", $path));
+    public function getFileNameByPath(string $path) {
+
+        return (string) array_pop(explode("/", $path));
     }
 
     /**
@@ -112,23 +115,29 @@ class Files {
             return [];
         }
     }
-    
+
     /**
-     * @param string $external_file_path
+     * @param string $source_file_path
      * @param string $save_file_path
      * @return boolean
      */
-    public function dowloadFile (string $external_file_path, string $save_file_path) {
-        return \boolval(file_put_contents($external_file_path, file_get_contents($save_file_path)));
+    public function dowloadFile(string $source_file_path, string $save_file_path) {
+        $content = \file_get_contents($source_file_path);
+        if ($content) {
+            \file_put_contents($save_file_path, $content);
+            return true;
+        } else {
+            return false;
+        }
     }
-    
+
     /**
      * @param string $path
      * @return array
      */
     public function getFileUploadArray(string $path) {
-       
+
         return \CFile::MakeFileArray($path);
-        
     }
+
 }

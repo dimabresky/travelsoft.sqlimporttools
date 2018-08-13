@@ -115,11 +115,11 @@ abstract class Exporter {
     /**
      * @return array
      */
-    protected function _getIblockPoliciesId() {
+    protected function _getIblockPoliciesId(array $XML_IDs = []) {
 
         $arIblockPliciesId = [];
 
-        $iblockPolicies = $this->_iblock_element_object->GetList(false, ["XML_ID" => $this->_getDbPoliciesId(), "IBLOCK_ID" => Config::POLICIES_IBLOCK_ID], false, false, ["ID", "XML_ID"]);
+        $iblockPolicies = $this->_iblock_element_object->GetList(false, ["XML_ID" => empty($XML_IDs) ? $this->_getDbPoliciesId() : $XML_IDs, "IBLOCK_ID" => Config::POLICIES_IBLOCK_ID], false, false, ["ID", "XML_ID"]);
 
         while ($arIblockPolicy = $iblockPolicies->Fetch()) {
             $arIblockPliciesId[$arIblockPolicy["XML_ID"]] = $arIblockPolicy["ID"];
@@ -176,7 +176,7 @@ abstract class Exporter {
         $iblockCountries = $this->_iblock_element_object->GetList(false, ["ID" => $this->_getDbCountriesId(), "IBLOCK_ID" => Config::COUNTRIES_IBLOCK_ID], false, false, ["ID"]);
 
         while ($arIblockCountry = $iblockCountries->Fetch()) {
-            $arIblockCountriesId = $arIblockCountry["ID"];
+            $arIblockCountriesId[] = $arIblockCountry["ID"];
         }
 
         return $arIblockCountriesId;
@@ -203,11 +203,11 @@ abstract class Exporter {
     /**
      * @return array
      */
-    protected function _getIblockFacilitiesId() {
+    protected function _getIblockFacilitiesId(array $XML_IDs = []) {
 
         $arIblockFacilitiesId = [];
 
-        $iblockFacilities = $this->_iblock_element_object->GetList(false, ["ID" => $this->_getDbFacilitiesId(), "IBLOCK_ID" => Config::FACILITIES_IBLOCK_ID], false, false, ["ID", "XML_ID"]);
+        $iblockFacilities = $this->_iblock_element_object->GetList(false, ["XML_ID" => empty($XML_IDs) ? $this->_getDbFacilitiesId(): $XML_IDs, "IBLOCK_ID" => Config::FACILITIES_IBLOCK_ID], false, false, ["ID", "XML_ID"]);
 
         while ($arIblockFacility = $iblockFacilities->Fetch()) {
             $arIblockFacilitiesId[$arIblockFacility["XML_ID"]] = $arIblockFacility["ID"];
@@ -223,7 +223,7 @@ abstract class Exporter {
 
         $arIblockFacilitiesTypeId = [];
 
-        $iblockFacilitiesType = $this->_iblock_element_object->GetList(false, ["ID" => $this->_getDbFacilitiesTypeId(), "IBLOCK_ID" => Config::FACILITIES_TYPE_IBLOCK_ID], false, false, ["ID", "XML_ID"]);
+        $iblockFacilitiesType = $this->_iblock_element_object->GetList(false, ["XML_ID" => $this->_getDbFacilitiesTypeId(), "IBLOCK_ID" => Config::FACILITIES_TYPE_IBLOCK_ID], false, false, ["ID", "XML_ID"]);
 
         while ($arIblockFacilityType = $iblockFacilitiesType->Fetch()) {
             $arIblockFacilitiesTypeId[$arIblockFacilityType["XML_ID"]] = $arIblockFacilityType["ID"];
@@ -249,7 +249,7 @@ abstract class Exporter {
 
         $arIblockHotelsId = [];
 
-        $iblockHotels = $this->_iblock_element_object->GetList(false, ["ID" => $this->_getDbFacilitiesId(), "IBLOCK_ID" => Config::HOTELS_IBLOCK_ID], false, false, ["ID", "XML_ID"]);
+        $iblockHotels = $this->_iblock_element_object->GetList(false, ["XML_ID" => $this->_getDbHotelsId(), "IBLOCK_ID" => Config::HOTELS_IBLOCK_ID], false, false, ["ID", "XML_ID"]);
 
         while ($arIblockHotel = $iblockHotels->Fetch()) {
             $arIblockHotelsId[$arIblockHotel["XML_ID"]] = $arIblockHotel["ID"];

@@ -1,2 +1,2 @@
 <?php
-$MESS["travelsoft_sqlimporttools_PAGE_TITLE"] = "Travelsoft sql parser tools";
+$MESS["travelsoft_sqlimporttools_PAGE_TITLE"] = "Travelsoft sql import tools";

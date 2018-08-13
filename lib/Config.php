@@ -8,9 +8,11 @@ namespace travelsoft\sqlimporttools;
  */
 class Config {
     
-    const RELATIVE_UPLOAD_SQL_FILES_DIR = "/upload/travelsoft_sqlimporttools_sql";
+    const RELATIVE_MODULE_UPLOAD_DIR = "/upload/travelsoft_sqlimporttools/";
     
-    const RELATIVE_UPLOAD_IMAGES_DIR = "/upload/travelsoft_sqlimporttools_images";
+    const RELATIVE_UPLOAD_SQL_FILES_DIR = "/upload/travelsoft_sqlimporttools/sql";
+    
+    const RELATIVE_UPLOAD_IMAGES_DIR = "/upload/travelsoft_sqlimporttools/images";
     
     // db settings
     const DB_NAME = "hotels_booking";
@@ -23,7 +25,7 @@ class Config {
     
     const PROGRESS_TOTAL = 100;
     
-    const ROWS_LIMIT_DB_QUERY = 200;
+    const ROWS_LIMIT_DB_QUERY = 10;
     
     
     // iblocks id
@@ -38,6 +40,8 @@ class Config {
     const FACILITIES_TYPE_IBLOCK_ID = 58;
     
     const HOTELS_IBLOCK_ID = 31;
+    
+    const ROOMS_IBLOCK_ID = 57;
     
     /**
      * @return string
@@ -81,7 +85,7 @@ class Config {
      * @return string
      */
     public static function getAbsUploadHotelsImagePath (string $file_name, int $hotel_id) {
-        return self::getAbsUploadImagesDir() . "/hotels/$hotel_id/$file_name";
+        return self::getAbsUploadImagesDir() . "/hotel_" . $hotel_id ."_". $file_name;
     }
     
     /**
@@ -90,13 +94,13 @@ class Config {
      * @return string
      */
     public static function getAbsUploadRoomsImagePath (string $file_name, int $room_id) {
-        return self::getAbsUploadImagesDir() . "/rooms/$room_id/$file_name";
+        return self::getAbsUploadImagesDir() . "/room_" . $room_id . "_" . $file_name;
     }
     
     /**
      * @return string
      */
     public static function getAbsLogFilePath () {
-        return \Bitrix\Main\Application::getDocumentRoot() . "/upload/travelsoft_sqlimporttools_export_log.txt";
+        return \Bitrix\Main\Application::getDocumentRoot() . "/upload/travelsoft_sqlimporttools/export_log.txt";
     }
 }

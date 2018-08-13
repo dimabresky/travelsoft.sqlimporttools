@@ -10,6 +10,8 @@ use \travelsoft\sqlimporttools\export\Exporter;
 use travelsoft\sqlimporttools\export\Cities as citiesExporter;
 use travelsoft\sqlimporttools\export\Policies as policiesExporter;
 use travelsoft\sqlimporttools\export\Facilities as facilitiesExporter;
+use travelsoft\sqlimporttools\export\Hotels as hotelsExporter;
+use travelsoft\sqlimporttools\export\Rooms as roomsExporter;
 
 Loc::loadMessages(__FILE__);
 
@@ -69,6 +71,32 @@ class Actions {
         $done = $policiesExporter->startExport();
 
         self::_totalFinish($action, $done, self::_totalLogMessage($policiesExporter, $done));
+    }
+    
+    /**
+     * @param array $parameters
+     * @param string $action
+     */
+    public static function hotelsExport (array $parameters, string $action) {
+        
+        $hotelsExporter = new hotelsExporter();
+
+        $done = $hotelsExporter->startExport();
+
+        self::_totalFinish($action, $done, self::_totalLogMessage($hotelsExporter, $done));
+    }
+    
+    /**
+     * @param array $parameters
+     * @param string $action
+     */
+    public static function roomsExport (array $parameters, string $action) {
+        
+        $roomsExporter = new roomsExporter();
+
+        $done = $roomsExporter->startExport();
+
+        self::_totalFinish($action, $done, self::_totalLogMessage($roomsExporter, $done));
     }
     
     /**
@@ -135,10 +163,10 @@ class Actions {
         $logMessage = "";
         if (!$done) {
 
-            $logMessage = "Export " . $exporter->short_export_name . " export step is finished (count: " . $exporter->selected_count_elements . ")." . $exporter->getLogErrors();
+            $logMessage = $exporter->short_export_name . " export step is finished (count: " . $exporter->selected_count_elements . ")." . $exporter->getLogErrors();
         } else {
 
-            $logMessage = "Export " . $exporter->short_export_name . " is finished." . $exporter->getLogErrors();
+            $logMessage = $exporter->short_export_name . " export is finished." . $exporter->getLogErrors();
         }
 
         return $logMessage;
