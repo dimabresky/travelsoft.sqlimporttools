@@ -23,10 +23,11 @@ class Config {
     
     const DB_PASSWORD = "qw23QW@#";
     
-    const PROGRESS_TOTAL = 100;
+    const SQL_BATCH_DELEMITER = ";";
     
-    const ROWS_LIMIT_DB_QUERY = 10;
+    const PROGRESS_TOTAL = 10;
     
+    const ROWS_LIMIT_DB_QUERY = 100;
     
     // iblocks id
     const CITIES_IBLOCK_ID = 30;
@@ -68,33 +69,6 @@ class Config {
         
         return \Bitrix\Main\Application::getDocumentRoot() . self::RELATIVE_UPLOAD_IMAGES_DIR;
         
-    }
-    
-    /**
-     * @param string $file_name
-     * @return string
-     */
-    public static function getAbsUploadImagePath (string $file_name) {
-        
-        return self::getAbsUploadImagesDir() . "/" . $file_name;
-    }
-    
-    /**
-     * @param string $file_name
-     * @param int $hotel_id
-     * @return string
-     */
-    public static function getAbsUploadHotelsImagePath (string $file_name, int $hotel_id) {
-        return self::getAbsUploadImagesDir() . "/hotel_" . $hotel_id ."_". $file_name;
-    }
-    
-    /**
-     * @param string $file_name
-     * @param int $room_id
-     * @return string
-     */
-    public static function getAbsUploadRoomsImagePath (string $file_name, int $room_id) {
-        return self::getAbsUploadImagesDir() . "/room_" . $room_id . "_" . $file_name;
     }
     
     /**

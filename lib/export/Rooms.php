@@ -18,7 +18,7 @@ class Rooms extends Exporter {
     public $short_export_name = "rooms";
     
     public function startExport () {
-        return self::_startExport("hotelRooms", $this, function ($context) {
+        return self::_startExport("hotelrooms", $this, function ($context) {
 
                     $existsIblockHotels = $context->_getIblockHotelsId();
                     
@@ -35,14 +35,10 @@ class Rooms extends Exporter {
                             "HOTEL" => isset($existsIblockHotels[$arRow["hotelId"]]) ? $existsIblockHotels[$arRow["hotelId"]] : 0
                         ];
 
-//                        $arImages = $files->downloadHotelImages(Tools::extractStringLikeArray($arRow["hotelUrlsList"]), $arRow["hotelId"]);
-//                        $arImages2Save = [];
-//                        if (!empty($arImages)) {
-//
-//                            foreach ($arImages as $k => $path) {
-//                                $arImages2Save["n$k"] = $files->getFileUploadArray($path);
-//                            }
-//                        }
+                        $arImages2Save = [];
+                        foreach (Tools::extractStringLikeArray($arRow["roomImagesPath"]) as $k => $rel_path) {
+                            $arImages2Save["n$k"] = $files->getFileUploadArray(Config::RELATIVE_MODULE_UPLOAD_DIR . "/" . $rel_path);
+                        }
 
                         if (isset($existsIblockRooms[$arRow["roomId"]])) {
 
@@ -60,9 +56,9 @@ class Rooms extends Exporter {
                                 }
 
                                 // удаление фото
-//                                while ($arPicture = $context->_iblock_element_object->GetProperty(Config::ROOMS_IBLOCK_ID, $existsIblockRooms[$arRow["roomId"]], 'ID', 'DESC', array('CODE' => "PICTIRES"))->Fetch()) {
-//                                    $context->_iblock_element_object->SetPropertyValueCode($existsIblockRooms[$arRow["roomId"]], "PICTURES", array($arPicture["PROPERTY_VALUE_ID"] => array('del' => 'Y')));
-//                                }
+                                while ($arPicture = $context->_iblock_element_object->GetProperty(Config::ROOMS_IBLOCK_ID, $existsIblockRooms[$arRow["roomId"]], 'ID', 'DESC', array('CODE' => "PICTIRES"))->Fetch()) {
+                                    $context->_iblock_element_object->SetPropertyValueCode($existsIblockRooms[$arRow["roomId"]], "PICTURES", array($arPicture["PROPERTY_VALUE_ID"] => array('del' => 'Y')));
+                                }
                             } else {
                                 $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try update " . $arRow["roomName"] . "]";
                             }
@@ -87,11 +83,11 @@ class Rooms extends Exporter {
                             }
                         }
 
-//                        if ($ID > 0) {
-//                            foreach ($arImages2Save as $arImage2Save) {
-//                                $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], "PICTURES", $arImage2Save);
-//                            }
-//                        }
+                        if ($ID > 0) {
+                            foreach ($arImages2Save as $arImage2Save) {
+                                $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], "PICTURES", $arImage2Save);
+                            }
+                        }
                     }
                 });
     }

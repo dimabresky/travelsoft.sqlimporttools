@@ -57,7 +57,7 @@ class Tools {
             case 500:
                 header($protocol . ' 500 Internal Server Error', true, 500);
                 die;
-            case 400:
+            case 404:
             default:
                 header($protocol . " 404 Not Found");
                 die;
@@ -85,6 +85,6 @@ class Tools {
      * @return array
      */
     public static function extractStringLikeArray(string $str) {
-        return (array)explode(",", str_replace(["[", "]", " "], ["", "", ""], $str));
+        return (array)explode(",", str_replace(["\"", "'", "[", "]", " "], ["", "", "", "", ""], $str));
     }
 }

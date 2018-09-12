@@ -19,7 +19,7 @@ class Policies extends Exporter {
 
     public function startExport() {
 
-        return $this->_startExport("hotelsPolicies", $this, function (Exporter $context) {
+        return $this->_startExport("hotelspolicies", $this, function (Exporter $context) {
 
                     $existsIblockPolicies = $context->_getIblockPoliciesId();
 

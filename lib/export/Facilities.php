@@ -22,7 +22,7 @@ class Facilities extends Exporter {
      */
     public function startExport() {
 
-        return self::_startExport("hotelsFacilities", $this, function ($context) {
+        return self::_startExport("hotelsfacilities", $this, function ($context) {
 
                     $existsIblockFacilities = $context->_getIblockFacilitiesId();
                     $existsIblockFacilitiesType = $context->_getIblockFacilitiesTypeId();

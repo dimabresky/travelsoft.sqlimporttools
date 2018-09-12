@@ -49,14 +49,10 @@ class Hotels extends Exporter {
                             "XML_URL" => $arRow["hotelUrl"]
                         ];
                         
-//                        $arImages = $files->downloadHotelImages(Tools::extractStringLikeArray($arRow["hotelUrlsList"]), $arRow["hotelId"]);
-//                        $arImages2Save = [];
-//                        if (!empty($arImages)) {
-//
-//                            foreach ($arImages as $k => $path) {
-//                                $arImages2Save["n$k"] = $files->getFileUploadArray($path);
-//                            }
-//                        }
+                        $arImages2Save = [];
+                        foreach (Tools::extractStringLikeArray($arRow["hotelImagesPath"]) as $k => $rel_path) {
+                            $arImages2Save["n$k"] = $files->getFileUploadArray(Config::RELATIVE_MODULE_UPLOAD_DIR . "/" . $rel_path);
+                        }
 
                         if (isset($existsIblockHotels[$arRow["hotelId"]])) {
 
@@ -73,10 +69,10 @@ class Hotels extends Exporter {
                                     $context->_iblock_element_object->SetPropertyValuesEx($existsIblockHotels[$arRow["hotelId"]], Config::HOTELS_IBLOCK_ID, [$code => $value]);
                                 }
 
-//                                // удаление фото
-//                                while ($arPicture = $context->_iblock_element_object->GetProperty(Config::HOTELS_IBLOCK_ID, $existsIblockHotels[$arRow["hotelId"]], 'ID', 'DESC', array('CODE' => "PICTIRES"))->Fetch()) {
-//                                    $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], "PICTURES", array($arPicture["PROPERTY_VALUE_ID"] => array('del' => 'Y')));
-//                                }
+                                // удаление фото
+                                while ($arPicture = $context->_iblock_element_object->GetProperty(Config::HOTELS_IBLOCK_ID, $existsIblockHotels[$arRow["hotelId"]], 'ID', 'DESC', array('CODE' => "PICTIRES"))->Fetch()) {
+                                    $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], "PICTURES", array($arPicture["PROPERTY_VALUE_ID"] => array('del' => 'Y')));
+                                }
                             } else {
                                 $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try update " . $arRow["hotelName"] . "]";
                             }
@@ -101,11 +97,11 @@ class Hotels extends Exporter {
                             }
                         }
 
-//                        if ($ID > 0) {
-//                            foreach ($arImages2Save as $arImage2Save) {
-//                                $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], "PICTURES", $arImage2Save);
-//                            }
-//                        }
+                        if ($ID > 0) {
+                            foreach ($arImages2Save as $arImage2Save) {
+                                $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], "PICTURES", $arImage2Save);
+                            }
+                        }
                     }
                 });
     }

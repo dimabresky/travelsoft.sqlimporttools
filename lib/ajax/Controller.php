@@ -23,6 +23,7 @@ class Controller {
         "facilities_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::facilitiesExport",
         "hotels_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::hotelsExport",
         "rooms_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::roomsExport",
+        "finish_export" => "\\travelsoft\\sqlimporttools\\ajax\\Actions::finishExport",
     ];
 
     public function __construct(\Bitrix\Main\Request $request) {
@@ -93,7 +94,7 @@ class Controller {
 
         $progress = (ceil(Config::PROGRESS_TOTAL / count($actions))) * (\array_search($action, $actions) + 1);
 
-        return $progress > Config::PROGRESS_TOTAL ? Config::PROGRESS_TOTAL : $progress;
+        return $progress >= Config::PROGRESS_TOTAL ? Config::PROGRESS_TOTAL : $progress;
     }
 
     /**

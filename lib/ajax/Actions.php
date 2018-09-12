@@ -32,16 +32,36 @@ class Actions {
         if (!isset($parameters["sql_file_name"]) || !\file_exists(Config::getAbsUploadSqlFilePath($parameters["sql_file_name"]))) {
             throw new \Exception(Loc::getMessage("travelsoft_sqlparser_tools_FILE_NOT_EXISTS", ["#file#" => $parameters["sql_file_name"]]));
         }
+        $connection = Tools::getConnection();
 
-        $result = Tools::getConnection()->executeSqlBatch(
-                \file_get_contents(Config::getAbsUploadSqlFilePath($parameters["sql_file_name"])));
+        $result = null;
+        $file = \fopen(Config::getAbsUploadSqlFilePath($parameters["sql_file_name"]), 'r');
+        if ($file) {
 
-        $logMessage = "Import of sql file " . $parameters["sql_file_name"] . " is finished.";
+            $char = $sql_batch = '';
+            while (($char = \fgetc($file)) !== false) {
+                $sql_batch .= $char;
+                $PHP_EOL = \fgetc($file);
+                $sql_batch .= $PHP_EOL;
+                if ($char === Config::SQL_BATCH_DELEMITER && $PHP_EOL === \PHP_EOL) {
+                    
+                    $result = $connection->executeSqlBatch($sql_batch);
+                    if (!empty($result)) {
+                        $logMessage .= "\r\n";
+                        $logMessage .= "some problems: \r\n";
+                        $logMessage .= implode("\r\n", $result);
+                    }
+                    $sql_batch = '';
+                }
+                if ($PHP_EOL === false) {
+                    break;
+                }
+            }
 
-        if (!empty($result)) {
-            $logMessage .= "\r\n";
-            $logMessage .= "some problems: \r\n";
-            $logMessage .= implode("\r\n", $result);
+            $logMessage = "Import of sql file " . $parameters["sql_file_name"] . " is finished." . $logMessage;
+        } else {
+
+            $logMessage = "Sql file " . $parameters["sql_file_name"] . " not must be read.";
         }
 
         self::_totalFinish($action, true, $logMessage);
@@ -72,38 +92,38 @@ class Actions {
 
         self::_totalFinish($action, $done, self::_totalLogMessage($policiesExporter, $done));
     }
-    
+
     /**
      * @param array $parameters
      * @param string $action
      */
-    public static function hotelsExport (array $parameters, string $action) {
-        
+    public static function hotelsExport(array $parameters, string $action) {
+
         $hotelsExporter = new hotelsExporter();
 
         $done = $hotelsExporter->startExport();
 
         self::_totalFinish($action, $done, self::_totalLogMessage($hotelsExporter, $done));
     }
-    
+
     /**
      * @param array $parameters
      * @param string $action
      */
-    public static function roomsExport (array $parameters, string $action) {
-        
+    public static function roomsExport(array $parameters, string $action) {
+
         $roomsExporter = new roomsExporter();
 
         $done = $roomsExporter->startExport();
 
         self::_totalFinish($action, $done, self::_totalLogMessage($roomsExporter, $done));
     }
-    
+
     /**
      * @param array $parameters
      * @param string $action
      */
-    public static function facilitiesExport (array $parameters, string $action) {
+    public static function facilitiesExport(array $parameters, string $action) {
 
         $facilitiesExporter = new facilitiesExporter();
 
@@ -111,7 +131,11 @@ class Actions {
 
         self::_totalFinish($action, $done, self::_totalLogMessage($facilitiesExporter, $done));
     }
-
+    
+    public static function finishExport (array $parameters, string $action) {
+        self::_totalFinish($action, true, "Script work is finished.");
+    }
+    
     /**
      * @param callable $callback
      * @param string $logMessage
@@ -121,7 +145,7 @@ class Actions {
         (new Logger(Config::getAbsLogFilePath()))->write($logMessage);
         Tools::sendResponse(200, $callback);
     }
-    
+
     /**
      * @param string $action
      * @param bool $done
