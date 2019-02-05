@@ -84,7 +84,13 @@ class Tools {
      * @param string $str
      * @return array
      */
-    public static function extractStringLikeArray(string $str) {
-        return (array)explode(",", str_replace(["\"", "'", "[", "]", " "], ["", "", "", "", ""], $str));
+    public static function extractStringLikeArray(string $str, bool $without_spaces = false) {
+        $in = ["\"", "'", "[", "]"];
+        $out = ["", "", "", ""];
+        if ($without_spaces) {
+            $in[] = " ";
+            $out[] = "";
+        }
+        return (array)explode(",", str_replace($in, $out, $str));
     }
 }
