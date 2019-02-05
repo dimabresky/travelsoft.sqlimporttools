@@ -85,8 +85,8 @@ class Tools {
      * @return array
      */
     public static function extractStringLikeArray(string $str, bool $without_spaces = false) {
-        $in = ["\"", "'", "[", "]", ", "];
-        $out = ["", "", "", "", ""];
+        $in = ["\"", "'", "[", "]"];
+        $out = ["", "", "", ""];
         if ($without_spaces) {
             $in[] = " ";
             $out[] = "";
