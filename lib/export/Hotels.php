@@ -22,6 +22,7 @@ class Hotels extends Exporter {
      * @return boolean
      */
     public function startExport() {
+        
         return self::_startExport("hotels", $this, function ($context) {
 
                     $existsIblockHotels = $context->_getIblockHotelsId();
@@ -44,14 +45,14 @@ class Hotels extends Exporter {
                             "CHECKIN_UNTIL" => $arRow["checkinUntil"],
                             "CHECKOUT_FROM" => $arRow["checkoutFrom"],
                             "CHECKOUT_UNTIL" => $arRow["checkoutUntil"],
-                            "POLICY" => $context->_getPoliciesByXML_ID(Tools::extractStringLikeArray($arRow["policyId"])),
-                            "SERVICES" => $context->_getFacilitiesByXML_ID(Tools::extractStringLikeArray($arRow["facilityId"])),
+                            "POLICY" => $context->_getPoliciesByXML_ID(Tools::extractStringLikeArray($arRow["policyId"], true)),
+                            "SERVICES" => $context->_getFacilitiesByXML_ID(Tools::extractStringLikeArray($arRow["facilityId"], true)),
                             "XML_URL" => $arRow["hotelUrl"]
                         ];
                         
                         $arImages2Save = [];
-                        foreach (Tools::extractStringLikeArray($arRow["hotelImagesPath"]) as $k => $rel_path) {
-                            $arImages2Save["n$k"] = $files->getFileUploadArray(Config::RELATIVE_MODULE_UPLOAD_DIR . "/" . $rel_path);
+                        foreach (Tools::extractStringLikeArray($arRow["hotelImagesPath"], true) as $k => $rel_path) {
+                            $arImages2Save["n$k"] = ["VALUE" => $files->getFileUploadArray(Config::RELATIVE_MODULE_UPLOAD_DIR . "/" . $rel_path)];
                         }
 
                         if (isset($existsIblockHotels[$arRow["hotelId"]])) {
@@ -64,16 +65,19 @@ class Hotels extends Exporter {
                             ]);
 
                             if ($is_updated) {
-
+                                
                                 foreach ($arProperties as $code => $value) {
-                                    $context->_iblock_element_object->SetPropertyValuesEx($existsIblockHotels[$arRow["hotelId"]], Config::HOTELS_IBLOCK_ID, [$code => $value]);
+                                    
+                                    $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], $code, $value);
                                 }
 
                                 // удаление фото
-                                while ($arPicture = $context->_iblock_element_object->GetProperty(Config::HOTELS_IBLOCK_ID, $existsIblockHotels[$arRow["hotelId"]], 'ID', 'DESC', array('CODE' => "PICTIRES"))->Fetch()) {
-                                    $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], "PICTURES", array($arPicture["PROPERTY_VALUE_ID"] => array('del' => 'Y')));
-                                }
+                                $arPicture = $context->_iblock_element_object->GetProperty(Config::HOTELS_IBLOCK_ID, $existsIblockHotels[$arRow["hotelId"]], 'ID', 'DESC', array('CODE' => "PICTURES"))->Fetch();
+
+                                $context->_iblock_element_object->SetPropertyValuesEx($existsIblockHotels[$arRow["hotelId"]], Config::HOTELS_IBLOCK_ID, array($arPicture["ID"] => array("VALUE" => ['del' => 'Y'])));
+
                             } else {
+
                                 $context->errors[] = Tools::prepare2Log($context->_iblock_element_object->LAST_ERROR) . "[try update " . $arRow["hotelName"] . "]";
                             }
 
@@ -99,7 +103,7 @@ class Hotels extends Exporter {
 
                         if ($ID > 0) {
                             foreach ($arImages2Save as $arImage2Save) {
-                                $context->_iblock_element_object->SetPropertyValueCode($existsIblockHotels[$arRow["hotelId"]], "PICTURES", $arImage2Save);
+                                $context->_iblock_element_object->SetPropertyValueCode($ID, "PICTURES", $arImage2Save);
                             }
                         }
                     }
